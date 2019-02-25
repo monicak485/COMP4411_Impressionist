@@ -24,7 +24,7 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 
 	int size = pDoc->getSize();
 	glPointSize((float)size);
-	printf("size %d\n", (int)size);
+	
 
 	BrushMove(source, target);
 }
@@ -40,16 +40,22 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	}
 
 	int size = pDoc->getSize();
+	GLfloat thickness = (GLfloat) pDoc->getThickness();
+	int angle = pDoc->getAngle();
+
+	printf("Thickness %d\nAngle %d\n", thickness, angle);
 	int x1 = target.x - size;
 
 	int y1 = target.y;
 
 	int x2 = target.x + 30;
 
-	int y2 = target.y;
+	//Adding to the y adds to the angle but also makes it longer?
+	int y2 = target.y + angle;
 	
 	SetColor(source);
 	glBegin(GL_LINES);
+	glLineWidth(thickness);
 	glVertex2d(x1, y1);
 	glVertex2d(x2, y2);
 

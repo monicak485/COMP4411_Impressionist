@@ -425,7 +425,7 @@ void ImpressionistUI::setAngle( int angle )
 {
 	m_nAngle= angle;
 
-	if (angle<=40) 
+	if (angle<=180) 
 		m_BrushAngleSlider->value(m_nAngle);
 }
 
@@ -536,8 +536,8 @@ ImpressionistUI::ImpressionistUI() {
 	// init values
 
 	m_nSize = 10;
-	m_nThickness = 10;
-	m_nAngle = 10;
+	m_nThickness = 0;
+	m_nAngle = 0;
 	m_nR = 1.0;
 	m_nG = 1.0;
 	m_nB = 1.0;
@@ -587,8 +587,8 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushAngleSlider->type(FL_HOR_NICE_SLIDER);
 		m_BrushAngleSlider->labelfont(FL_COURIER);
 		m_BrushAngleSlider->labelsize(12);
-		m_BrushAngleSlider->minimum(1);
-		m_BrushAngleSlider->maximum(40);
+		m_BrushAngleSlider->minimum(0);
+		m_BrushAngleSlider->maximum(180);
 		m_BrushAngleSlider->step(1);
 		m_BrushAngleSlider->value(m_nAngle);
 		m_BrushAngleSlider->align(FL_ALIGN_RIGHT);
