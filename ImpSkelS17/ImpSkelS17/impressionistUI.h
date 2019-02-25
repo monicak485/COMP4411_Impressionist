@@ -11,6 +11,7 @@
 #include <FL/Fl_Window.H>
 #include <FL/fl_file_chooser.H>		// FLTK file chooser
 #include <FL/Fl_Menu_Bar.H>
+#include <FL/Fl_Color_Chooser.H>
 #include <FL/Fl_Value_Slider.H>
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Button.H>
@@ -33,14 +34,21 @@ public:
 	PaintView*			m_paintView;
 	OriginalView*		m_origView;
 
-// for brush dialog
+	// for brush dialog
 	Fl_Window*			m_brushDialog;
 	Fl_Choice*			m_BrushTypeChoice;
+
 
 	Fl_Slider*			m_BrushSizeSlider;
 	Fl_Slider*			m_BrushThicknessSlider;
 	Fl_Slider*			m_BrushAngleSlider;
 	Fl_Button*          m_ClearCanvasButton;
+
+	// for color selction
+	Fl_Window*			m_colorDialog;
+	Fl_Color_Chooser*   m_colorChoose;
+	
+
 
 	// Member functions
 	void				setDocument(ImpressionistDoc* doc);
@@ -61,6 +69,15 @@ public:
 	int					getAngle();
 	void				setAngle(int angle);
 
+	double					getR();
+	void				setR(double r);
+	
+	double					getG();
+	void				setG(double g);
+
+	double					getB();
+	void				setB(double b);
+
 private:
 	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document
 
@@ -68,6 +85,11 @@ private:
 	int		m_nSize;
 	int		m_nThickness;
 	int		m_nAngle;
+
+	double  m_nR;
+	double  m_nG;
+	double  m_nB;
+
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
@@ -81,10 +103,12 @@ private:
 	static void	cb_save_image(Fl_Menu_* o, void* v);
 	static void	cb_brushes(Fl_Menu_* o, void* v);
 	static void	cb_clear_canvas(Fl_Menu_* o, void* v);
+	static void	cb_color_dialog(Fl_Menu_* o, void* v);
 	static void	cb_exit(Fl_Menu_* o, void* v);
 	static void	cb_about(Fl_Menu_* o, void* v);
 	static void	cb_brushChoice(Fl_Widget* o, void* v);
 	static void	cb_clear_canvas_button(Fl_Widget* o, void* v);
+	static void	cb_colorChoice(Fl_Widget* o, void* v);
 	static void	cb_sizeSlides(Fl_Widget* o, void* v);
 	static void	cb_thicknessSlides(Fl_Widget* o, void* v);
 	static void	cb_angleSlides(Fl_Widget* o, void* v);
