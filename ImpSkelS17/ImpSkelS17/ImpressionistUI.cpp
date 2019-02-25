@@ -241,6 +241,17 @@ void ImpressionistUI::cb_clear_canvas(Fl_Menu_* o, void* v)
 }
 
 //------------------------------------------------------------
+// 
+// choose colors
+//------------------------------------------------------------
+void ImpressionistUI::cb_color_dialog(Fl_Menu_* o, void* v)
+{
+	whoami(o)->m_colorDialog->show();
+
+	//
+}
+
+//------------------------------------------------------------
 // Causes the Impressionist program to exit
 // Called by the UI when the quit menu item is chosen
 //------------------------------------------------------------
@@ -272,7 +283,10 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 {
 	ImpressionistUI* pUI=((ImpressionistUI *)(o->user_data()));
 	ImpressionistDoc* pDoc=pUI->getDocument();
+
 	int type=(int)v;
+
+
 	pDoc->setBrushType(type);
 }
 
@@ -287,7 +301,17 @@ void ImpressionistUI::cb_clear_canvas_button(Fl_Widget* o, void* v)
 	pDoc->clearCanvas();
 }
 
+// Called by the UI when a brush is chosen in the color choice
+void ImpressionistUI::cb_colorChoice(Fl_Widget* o, void* v)
 
+{
+	((ImpressionistUI*)(o->user_data()))->m_nR = ((Fl_Color_Chooser*)o)->r();
+
+	((ImpressionistUI*)(o->user_data()))->m_nG = ((Fl_Color_Chooser*)o)->g();
+
+	((ImpressionistUI*)(o->user_data()))->m_nB = ((Fl_Color_Chooser*)o)->b();
+
+}
 //-----------------------------------------------------------
 // Updates the brush size to use from the value of the size
 // slider
@@ -404,6 +428,49 @@ void ImpressionistUI::setAngle( int angle )
 	if (angle<=40) 
 		m_BrushAngleSlider->value(m_nAngle);
 }
+
+//------------------------------------------------
+// Return the brush color rgb
+//------------------------------------------------
+double ImpressionistUI::getR()
+{
+	return m_nR;
+}
+
+//-------------------------------------------------
+// Set the brush color rgb
+//-------------------------------------------------
+void ImpressionistUI::setR(double r)
+{
+	m_nR = r;
+}
+
+double ImpressionistUI::getG()
+{
+	return m_nG;
+}
+
+//-------------------------------------------------
+// Set the brush color rgb
+//-------------------------------------------------
+void ImpressionistUI::setG(double g)
+{
+	m_nG = g;
+}
+
+double ImpressionistUI::getB()
+{
+	return m_nB;
+}
+
+//-------------------------------------------------
+// Set the brush color rgb
+//-------------------------------------------------
+void ImpressionistUI::setB(double b)
+{
+	m_nB = b;
+}
+
 // Main menu definition
 Fl_Menu_Item ImpressionistUI::menuitems[] = {
 	{ "&File",		0, 0, 0, FL_SUBMENU },
@@ -411,6 +478,8 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 		{ "&Save Image...",	FL_ALT + 's', (Fl_Callback *)ImpressionistUI::cb_save_image },
 		{ "&Brushes...",	FL_ALT + 'b', (Fl_Callback *)ImpressionistUI::cb_brushes }, 
 		{ "&Clear Canvas", FL_ALT + 'c', (Fl_Callback *)ImpressionistUI::cb_clear_canvas, 0, FL_MENU_DIVIDER },
+
+		{ "&Colors", FL_ALT + 'o', (Fl_Callback *)ImpressionistUI::cb_color_dialog, 0, FL_MENU_DIVIDER },
 		
 		{ "&Quit",			FL_ALT + 'q', (Fl_Callback *)ImpressionistUI::cb_exit },
 		{ 0 },
@@ -469,6 +538,9 @@ ImpressionistUI::ImpressionistUI() {
 	m_nSize = 10;
 	m_nThickness = 10;
 	m_nAngle = 10;
+	m_nR = 1.0;
+	m_nG = 1.0;
+	m_nB = 1.0;
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -526,5 +598,17 @@ ImpressionistUI::ImpressionistUI() {
 
 
     m_brushDialog->end();	
+
+	// color selection
+	m_colorDialog = new Fl_Window(400, 325, "Color Selector");
+		// Add a color selector widget choice to the dialog
+		m_colorChoose = new Fl_Color_Chooser(100, 100, 200, 200, "&Color Selector");
+		m_colorChoose->user_data((void*)(this));	// record self to be used by static callback functions
+		m_colorChoose->rgb(m_nR, m_nG, m_nB);
+		m_colorChoose->callback(cb_colorChoice);
+
+
+
+		
 
 }
