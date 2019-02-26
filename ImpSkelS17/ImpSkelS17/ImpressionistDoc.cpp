@@ -77,6 +77,14 @@ char* ImpressionistDoc::getImageName()
 void ImpressionistDoc::setBrushType(int type)
 {
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[type];
+	if (type == BRUSH_LINES) {
+		m_pUI->m_BrushThicknessSlider->activate();
+		m_pUI->m_BrushAngleSlider->activate();
+	}
+	else {
+		m_pUI->m_BrushThicknessSlider->deactivate();
+		m_pUI->m_BrushAngleSlider->deactivate();
+	}
 }
 
 //---------------------------------------------------------

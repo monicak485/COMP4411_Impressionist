@@ -580,6 +580,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushThicknessSlider->value(m_nThickness);
 		m_BrushThicknessSlider->align(FL_ALIGN_RIGHT);
 		m_BrushThicknessSlider->callback(cb_thicknessSlides);
+		m_BrushThicknessSlider->deactivate();
 
 		m_BrushAngleSlider = new Fl_Value_Slider(10, 120, 300, 20, "Angle");
 		m_BrushAngleSlider->user_data((void*)(this));
@@ -593,6 +594,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushAngleSlider->value(m_nAngle);
 		m_BrushAngleSlider->align(FL_ALIGN_RIGHT);
 		m_BrushAngleSlider->callback(cb_angleSlides);
+		m_BrushAngleSlider->deactivate();
 
 
 
