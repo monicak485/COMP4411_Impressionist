@@ -575,7 +575,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushThicknessSlider->labelfont(FL_COURIER);
 		m_BrushThicknessSlider->labelsize(12);
 		m_BrushThicknessSlider->minimum(1);
-		m_BrushThicknessSlider->maximum(40);
+		m_BrushThicknessSlider->maximum(15);
 		m_BrushThicknessSlider->step(1);
 		m_BrushThicknessSlider->value(m_nThickness);
 		m_BrushThicknessSlider->align(FL_ALIGN_RIGHT);
