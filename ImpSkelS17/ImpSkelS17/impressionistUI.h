@@ -42,6 +42,7 @@ public:
 	Fl_Slider*			m_BrushSizeSlider;
 	Fl_Slider*			m_BrushThicknessSlider;
 	Fl_Slider*			m_BrushAngleSlider;
+	Fl_Slider*			m_BrushAlphaSlider;
 	Fl_Button*          m_ClearCanvasButton;
 
 	// for color selction
@@ -69,13 +70,16 @@ public:
 	int					getAngle();
 	void				setAngle(int angle);
 
-	double					getR();
+	double				getAlpha();
+	void				setAlpha(double alpha);
+
+	double				getR();
 	void				setR(double r);
 	
-	double					getG();
+	double				getG();
 	void				setG(double g);
 
-	double					getB();
+	double				getB();
 	void				setB(double b);
 
 private:
@@ -85,6 +89,7 @@ private:
 	int		m_nSize;
 	int		m_nThickness;
 	int		m_nAngle;
+	double  m_nAlpha;
 
 	double  m_nR;
 	double  m_nG;
@@ -112,7 +117,7 @@ private:
 	static void	cb_sizeSlides(Fl_Widget* o, void* v);
 	static void	cb_thicknessSlides(Fl_Widget* o, void* v);
 	static void	cb_angleSlides(Fl_Widget* o, void* v);
-
+	static void	cb_alphaSlides(Fl_Widget* o, void* v);
 
 };
 

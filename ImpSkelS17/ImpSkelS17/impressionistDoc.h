@@ -28,10 +28,12 @@ public:
 	int		getSize();						// get the UI size
 	int		getThickness();						// get the UI size
 	int		getAngle();						// get the UI size
+	double  getAlpha();
 
 	void	setSize(int size);				// set the UI size
 	void	setThickness(int size);				// set the UI size
 	void	setAngle(int size);				// set the UI size
+	void    setAlpha(double alpha);
 
 	char*	getImageName();					// get the current image name
 	
@@ -55,6 +57,7 @@ public:
 	int m_nSize;		
 	int m_nThickness;
 	int m_nAngle;
+	double m_nAlpha;
 
 	ImpressionistUI*	m_pUI;
 

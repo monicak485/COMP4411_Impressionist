@@ -52,3 +52,22 @@ void ImpBrush::SetColor (const Point source)
 	glColor3ubv( color );
 
 }
+
+void ImpBrush::SetColor(const Point source, double alpha)
+{
+	ImpressionistDoc* pDoc = GetDocument();
+
+	GLubyte color[4];  
+
+	memcpy(color, pDoc->GetOriginalPixel(source), 3);
+
+	color[0] *= (double)pDoc->m_pUI->getR();
+	color[1] *= (double)pDoc->m_pUI->getG();
+	color[2] *= (double)pDoc->m_pUI->getB();
+
+	color[3]=  255 * alpha;
+
+  
+	glColor4ubv(color);
+
+}

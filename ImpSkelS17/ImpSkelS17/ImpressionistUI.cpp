@@ -332,6 +332,12 @@ void ImpressionistUI::cb_angleSlides(Fl_Widget* o, void* v)
 	((ImpressionistUI*)(o->user_data()))->m_nAngle = int(((Fl_Slider *)o)->value());
 }
 
+void ImpressionistUI::cb_alphaSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nAlpha = double(((Fl_Slider *)o)->value());
+}
+
+
 //---------------------------------- per instance functions --------------------------------------
 
 //------------------------------------------------
@@ -418,16 +424,36 @@ int ImpressionistUI::getAngle()
 	return m_nAngle;
 }
 
+void ImpressionistUI::setAngle(int angle)
+{
+	m_nAngle = angle;
+
+	if (angle <= 180)
+		m_BrushAngleSlider->value(m_nAngle);
+}
 //-------------------------------------------------
 // Set the brush size
 //-------------------------------------------------
-void ImpressionistUI::setAngle( int angle )
-{
-	m_nAngle= angle;
 
-	if (angle<=180) 
-		m_BrushAngleSlider->value(m_nAngle);
+double ImpressionistUI::getAlpha()
+{
+	return m_nAlpha;
 }
+
+void ImpressionistUI::setAlpha(double alpha )
+{
+	m_nAlpha= alpha;
+
+	if (alpha<=1.00) 
+		m_BrushAlphaSlider->value(m_nAlpha);
+}
+
+
+//-------------------------------------------------
+// Set the brush size
+//-------------------------------------------------
+
+
 
 //------------------------------------------------
 // Return the brush color rgb
@@ -538,9 +564,11 @@ ImpressionistUI::ImpressionistUI() {
 	m_nSize = 10;
 	m_nThickness = 0;
 	m_nAngle = 0;
+	m_nAlpha = 0.00;
 	m_nR = 1.0;
 	m_nG = 1.0;
 	m_nB = 1.0;
+
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -593,6 +621,19 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushAngleSlider->value(m_nAngle);
 		m_BrushAngleSlider->align(FL_ALIGN_RIGHT);
 		m_BrushAngleSlider->callback(cb_angleSlides);
+
+		m_BrushAlphaSlider = new Fl_Value_Slider(10, 140, 300, 20, "Alpha");
+		m_BrushAlphaSlider->user_data((void*)(this));
+		// record self to be used by static callback functions
+		m_BrushAlphaSlider->type(FL_HOR_NICE_SLIDER);
+		m_BrushAlphaSlider->labelfont(FL_COURIER);
+		m_BrushAlphaSlider->labelsize(12);
+		m_BrushAlphaSlider->minimum(0.00);
+		m_BrushAlphaSlider->maximum(1.00);
+		m_BrushAlphaSlider->step(0.01);
+		m_BrushAlphaSlider->value(m_nAlpha);
+		m_BrushAlphaSlider->align(FL_ALIGN_RIGHT);
+		m_BrushAlphaSlider->callback(cb_alphaSlides);
 
 
 

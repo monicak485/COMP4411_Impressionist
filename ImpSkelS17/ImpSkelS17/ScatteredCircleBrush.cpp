@@ -1,23 +1,23 @@
 //
-// CircleBrush.cpp
+// ScatteredCircleBrush.cpp
 //
-// The implementation of Line Brush. It is a kind of ImpBrush. All your brush implementations
+// The implementation of Scattered Circle Brush. It is a kind of ImpBrush. All your brush implementations
 // will look like the file with the different GL primitive calls.
 //
 
 #include <math.h>
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
-#include "CircleBrush.h"
+#include "ScatteredCircleBrush.h"
 
 extern float frand();
 
-CircleBrush::CircleBrush(ImpressionistDoc* pDoc, char* name) :
+ScatteredCircleBrush::ScatteredCircleBrush(ImpressionistDoc* pDoc, char* name) :
 	ImpBrush(pDoc, name)
 {
 }
 
-void CircleBrush::BrushBegin(const Point source, const Point target)
+void ScatteredCircleBrush::BrushBegin(const Point source, const Point target)
 {
 
 	ImpressionistDoc* pDoc = GetDocument();
@@ -30,17 +30,17 @@ void CircleBrush::BrushBegin(const Point source, const Point target)
 	BrushMove(source, target);
 }
 
-void CircleBrush::BrushMove(const Point source, const Point target)
+void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;
 
 	if (pDoc == NULL) {
-		printf("CircleBrush::BrushMove  document is NULL\n");
+		printf("ScatteredCircleBrush::BrushMove  document is NULL\n");
 		return;
 	}
 
-	double radius = pDoc->getSize()/2;
+	double radius = pDoc->getSize() / 2;
 	float DEGINRAD = 3.14159 / 180;
 	int num = 360;
 
@@ -54,20 +54,20 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		SetColor(source, pDoc->m_pUI->getAlpha());
+	SetColor(source, pDoc->m_pUI->getAlpha());
 
 	glBegin(GL_TRIANGLE_FAN);
 
 	for (int i = 0; i < num; i++) {
 		float degInRad = i* DEGINRAD;
-		glVertex2d(cos(degInRad)*radius +target.x, sin(degInRad)*radius + target.y);
+		glVertex2d(cos(degInRad)*radius + target.x, sin(degInRad)*radius + target.y);
 	}
-	
+
 
 	glEnd();
 }
 
-void CircleBrush::BrushEnd(const Point source, const Point target)
+void ScatteredCircleBrush::BrushEnd(const Point source, const Point target)
 {
 	// do nothing so far
 }
