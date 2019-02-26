@@ -1,5 +1,5 @@
 //
-// LineBrush.cpp
+// ScatteredLineBrush.cpp
 //
 // The implementation of Line Brush. It is a kind of ImpBrush. All your brush implementations
 // will look like the file with the different GL primitive calls.
@@ -9,7 +9,7 @@
 
 #include "impressionistUI.h"
 
-#include "LineBrush.h"
+#include "ScatteredLineBrush.h"
 
 #include <iostream>
 
@@ -17,12 +17,12 @@ using namespace std;
 
 extern float frand();
 
-LineBrush::LineBrush(ImpressionistDoc* pDoc, char* name) :
+ScatteredLineBrush::ScatteredLineBrush(ImpressionistDoc* pDoc, char* name) :
 	ImpBrush(pDoc, name)
 {
 }
 
-void LineBrush::BrushBegin(const Point source, const Point target)
+void ScatteredLineBrush::BrushBegin(const Point source, const Point target)
 {
 
 	ImpressionistDoc* pDoc = GetDocument();
@@ -30,7 +30,7 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 
 	int size = pDoc->getSize();
 	glPointSize((float)size);
-	
+
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
 
@@ -38,13 +38,13 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 	BrushMove(source, target);
 }
 
-void LineBrush::BrushMove(const Point source, const Point target)
+void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;
 
 	if (pDoc == NULL) {
-		printf("LineBrush::BrushMove  document is NULL\n");
+		printf("ScatteredLineBrush::BrushMove  document is NULL\n");
 		return;
 	}
 
@@ -54,22 +54,28 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	double yLine = (int)size * sin(((double)angle) * 3.16 / 360);
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
-	
 
-	int x1 = target.x - (int)xLine/2;
-	int y1 = target.y - (int)yLine/2;
-	int x2 = target.x + (int)xLine/2;
-	int y2 = target.y + (int)yLine/2;
-	
-	SetColor(source);
-	glBegin(GL_LINES);
-	glVertex2d(x1, y1);
-	glVertex2d(x2, y2);
+	int x1 = target.x - (int)xLine / 2;
+	int y1 = target.y - (int)yLine / 2;
+	int x2 = target.x + (int)xLine / 2;
+	int y2 = target.y + (int)yLine / 2;
 
-	glEnd();
+	for (int i = 0; i < 4; i++) {
+
+		glBegin(GL_LINES);
+
+		int Xoffset = rand() % (2 * size) - size;
+		int Yoffset = rand() % (2 * size) - size;
+		SetColor(Point(source.x + Xoffset, source.y + Yoffset));
+		glVertex2d(x2 + Xoffset, y1 + Yoffset);
+		glVertex2d(x1 + Xoffset, y2 + Yoffset);
+
+		glEnd();
+	}
+
 }
 
-void LineBrush::BrushEnd(const Point source, const Point target)
+void ScatteredLineBrush::BrushEnd(const Point source, const Point target)
 {
 	// do nothing so far
 }

@@ -603,11 +603,12 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushThicknessSlider->labelfont(FL_COURIER);
 		m_BrushThicknessSlider->labelsize(12);
 		m_BrushThicknessSlider->minimum(1);
-		m_BrushThicknessSlider->maximum(40);
+		m_BrushThicknessSlider->maximum(15);
 		m_BrushThicknessSlider->step(1);
 		m_BrushThicknessSlider->value(m_nThickness);
 		m_BrushThicknessSlider->align(FL_ALIGN_RIGHT);
 		m_BrushThicknessSlider->callback(cb_thicknessSlides);
+		m_BrushThicknessSlider->deactivate();
 
 		m_BrushAngleSlider = new Fl_Value_Slider(10, 120, 300, 20, "Angle");
 		m_BrushAngleSlider->user_data((void*)(this));
@@ -621,6 +622,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushAngleSlider->value(m_nAngle);
 		m_BrushAngleSlider->align(FL_ALIGN_RIGHT);
 		m_BrushAngleSlider->callback(cb_angleSlides);
+		m_BrushAngleSlider->deactivate();
 
 		m_BrushAlphaSlider = new Fl_Value_Slider(10, 140, 300, 20, "Alpha");
 		m_BrushAlphaSlider->user_data((void*)(this));

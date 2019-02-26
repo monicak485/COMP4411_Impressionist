@@ -26,7 +26,6 @@ void PointBrush::BrushBegin( const Point source, const Point target )
 
 
 	glPointSize( (float)size );
-	printf("size %d\n", (int)size);
 	BrushMove( source, target );
 }
 
