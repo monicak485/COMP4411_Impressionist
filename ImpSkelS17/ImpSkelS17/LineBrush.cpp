@@ -6,8 +6,14 @@
 //
 
 #include "impressionistDoc.h"
+
 #include "impressionistUI.h"
+
 #include "LineBrush.h"
+
+#include <iostream>
+
+using namespace std;
 
 extern float frand();
 
@@ -24,9 +30,10 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 
 	int size = pDoc->getSize();
 	glPointSize((float)size);
+	
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
-	printf("Thickness %d\n", thickness);
+
 
 	BrushMove(source, target);
 }
@@ -43,18 +50,16 @@ void LineBrush::BrushMove(const Point source, const Point target)
 
 	int size = pDoc->getSize();
 	int angle = pDoc->getAngle();
+	double xLine = (int)size * cos(((double)angle) * 3.16 / 360);
+	double yLine = (int)size * sin(((double)angle) * 3.16 / 360);
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
 	
 
-	int x1 = target.x - size;
-
-	int y1 = target.y;
-
-	int x2 = target.x + 30;
-
-	//Adding to the y adds to the angle but also makes it longer?
-	int y2 = target.y;
+	int x1 = target.x - (int)xLine/2;
+	int y1 = target.y - (int)yLine/2;
+	int x2 = target.x + (int)xLine/2;
+	int y2 = target.y + (int)yLine/2;
 	
 	SetColor(source);
 	glBegin(GL_LINES);
