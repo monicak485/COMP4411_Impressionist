@@ -94,14 +94,9 @@ void ImpressionistDoc::setBrushType(int type)
 
 void ImpressionistDoc::setStrokeDirectionType(int type)
 {
-	if (type == BRUSH_LINES || type == BRUSH_SCATTERED_LINES) {
-		m_pUI->m_BrushThicknessSlider->activate();
-		m_pUI->m_BrushAngleSlider->activate();
-	}
-	else {
-		m_pUI->m_BrushThicknessSlider->deactivate();
-		m_pUI->m_BrushAngleSlider->deactivate();
-	}
+	printf("type %d\n", type);
+	m_pUI->setStrokeDirection(type);
+	m_nCurrentDirection = type;
 }
 
 
@@ -130,6 +125,10 @@ double ImpressionistDoc::getAlpha()
 	return m_pUI->getAlpha();
 }
 
+int ImpressionistDoc::getStrokeDirectionType()
+{
+	return m_pUI->getStrokeDirection();
+}
 
 //---------------------------------------------------------
 // Load the specified image

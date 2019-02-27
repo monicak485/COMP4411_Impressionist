@@ -441,6 +441,15 @@ void ImpressionistUI::setAngle(int angle)
 	if (angle <= 180)
 		m_BrushAngleSlider->value(m_nAngle);
 }
+
+int ImpressionistUI::getStrokeDirection() {
+	return m_nStrokeDirection;
+}
+
+void ImpressionistUI::setStrokeDirection(int type)
+{
+	m_nStrokeDirection = type;
+}
 //-------------------------------------------------
 // Set the brush size
 //-------------------------------------------------
@@ -586,6 +595,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_nR = 1.0;
 	m_nG = 1.0;
 	m_nB = 1.0;
+	m_nStrokeDirection = 0;
 
 
 	// brush dialog definition

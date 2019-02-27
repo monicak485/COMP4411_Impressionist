@@ -52,26 +52,31 @@ void LineBrush::BrushMove(const Point source, const Point target)
 
 	int size = pDoc->getSize();
 	int angle = pDoc->getAngle();
-	double xLine = (int)size * cos(((double)angle) * 3.16 / 360);
-	double yLine = (int)size * sin(((double)angle) * 3.16 / 360);
+	double xLine, yLine; 
+
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
 
 	// Stroke Direction Stuff
-	//int direction = dlg->m_StrokeDirectionTypeChoice->value();
-		// 1. Right mouse
-			//don't do anything, use default! 
-		// 2. Mouse Direction
-	int diffX = target.x - prevPoint.x;
-	int diffY = target.y - prevPoint.y;
-	//printf("diff %d\n %d\n", diffX, diffY);
-	angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
-	xLine = (int)size * cos(((double)angle) * 3.16 / 360);
-	yLine = (int)size * sin(((double)angle) * 3.16 / 360);
-	prevPoint.x = target.x;
-	prevPoint.y = target.y;
-		// 3. Gradient
-	
+	int direction = pDoc->getStrokeDirectionType();
+	// GRADIENT
+	if (direction == 1) {
+		printf("Gradient needs to happen here");
+	}
+	// MOUSE DIRECTION
+	else if (direction == 2) {
+		int diffX = target.x - prevPoint.x;
+		int diffY = target.y - prevPoint.y;
+		angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
+		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
+		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
+		prevPoint.x = target.x;
+		prevPoint.y = target.y;
+	}
+	else {
+		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
+		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
+	}
 
 	int x1 = target.x - (int)xLine/2;
 	int y1 = target.y - (int)yLine/2;

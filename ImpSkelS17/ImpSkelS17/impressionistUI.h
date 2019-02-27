@@ -83,6 +83,9 @@ public:
 	double				getB();
 	void				setB(double b);
 
+	int					getStrokeDirection();
+	void				setStrokeDirection(int type);
+
 private:
 	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document
 
@@ -91,6 +94,7 @@ private:
 	int		m_nThickness;
 	int		m_nAngle;
 	double  m_nAlpha;
+	int		m_nStrokeDirection;
 
 	double  m_nR;
 	double  m_nG;
