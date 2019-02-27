@@ -31,6 +31,7 @@ public:
 	int		getThickness();						// get the UI size
 	int		getAngle();						// get the UI size
 	double  getAlpha();
+	int		getStrokeDirectionType();
 
 	void	setSize(int size);				// set the UI size
 	void	setThickness(int size);				// set the UI size
@@ -60,6 +61,8 @@ public:
 	int m_nThickness;
 	int m_nAngle;
 	double m_nAlpha;
+
+	int m_nCurrentDirection;
 
 	ImpressionistUI*	m_pUI;
 
