@@ -13,10 +13,9 @@
 extern float frand();
 
 ScatteredCircleBrush::ScatteredCircleBrush(ImpressionistDoc* pDoc, char* name) :
-	ImpBrush(pDoc, name)
+	CircleBrush(pDoc, name)
 {
 }
-
 void ScatteredCircleBrush::BrushBegin(const Point source, const Point target)
 {
 
@@ -30,6 +29,7 @@ void ScatteredCircleBrush::BrushBegin(const Point source, const Point target)
 	BrushMove(source, target);
 }
 
+
 void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
@@ -40,31 +40,20 @@ void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
-	double radius = pDoc->getSize() / 2;
-	float DEGINRAD = 3.14159 / 180;
-	int num = 360;
+	int size = pDoc->getSize();
+	int count = 2 + rand() * 3; // randomly choose between 2, 3 or 4 lines
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glBegin(GL_POINTS);
 
-	/*int x1 = target.x - size;
+	for (int i = 0; i < count; ++i) {
+		int x = rand() % size - size / 2;
+		int y = rand() % size - size / 2;
 
-	int y1 = target.y;
-
-	int x2 = target.x + 30;
-
-	int y2 = target.y;*/
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	SetColor(source, pDoc->m_pUI->getAlpha());
-
-	glBegin(GL_TRIANGLE_FAN);
-
-	for (int i = 0; i < num; i++) {
-		float degInRad = i* DEGINRAD;
-		glVertex2d(cos(degInRad)*radius + target.x, sin(degInRad)*radius + target.y);
+		Point p1 = Point((source.x + x), (source.y + y));
+		Point p2 = Point((target.x + x), (target.y + y));
+		CircleBrush::BrushMove(p1, p2);
 	}
-
-
-	glEnd();
 }
 
 void ScatteredCircleBrush::BrushEnd(const Point source, const Point target)
