@@ -63,8 +63,8 @@ void LineBrush::BrushMove(const Point source, const Point target)
 		// 2. Mouse Direction
 	int diffX = target.x - prevPoint.x;
 	int diffY = target.y - prevPoint.y;
-	printf("diff %d\n %d\n", diffX, diffY);
-	angle = (int)(atan2(diffY, diffX));
+	//printf("diff %d\n %d\n", diffX, diffY);
+	angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
 	xLine = (int)size * cos(((double)angle) * 3.16 / 360);
 	yLine = (int)size * sin(((double)angle) * 3.16 / 360);
 	prevPoint.x = target.x;
