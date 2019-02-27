@@ -295,10 +295,10 @@ void ImpressionistUI::cb_strokeDirectionChoice(Fl_Widget* o, void* v)
 	ImpressionistUI* pUI = ((ImpressionistUI *)(o->user_data()));
 	ImpressionistDoc* pDoc = pUI->getDocument();
 
-	//int type = (int)v;
+	int type = (int)v;
 
 
-	//pDoc->setBrushType(type);
+	pDoc->setStrokeDirectionType(type);
 }
 //------------------------------------------------------------
 // Clears the paintview canvas.
@@ -600,6 +600,7 @@ ImpressionistUI::ImpressionistUI() {
 		m_StrokeDirectionChoice->user_data((void*)(this));	// record self to be used by static callback functions
 		m_StrokeDirectionChoice->menu(strokeDirectionTypeMenu);
 		m_StrokeDirectionChoice->callback(cb_strokeDirectionChoice);
+		m_StrokeDirectionChoice->deactivate();
 
 
 		m_ClearCanvasButton = new Fl_Button(240,10,150,25,"&Clear Canvas");

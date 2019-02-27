@@ -82,16 +82,17 @@ void ImpressionistDoc::setBrushType(int type)
 	if (type == BRUSH_LINES || type == BRUSH_SCATTERED_LINES) {
 		m_pUI->m_BrushThicknessSlider->activate();
 		m_pUI->m_BrushAngleSlider->activate();
+		m_pUI->m_StrokeDirectionChoice->activate();
 	}
 	else {
 		m_pUI->m_BrushThicknessSlider->deactivate();
 		m_pUI->m_BrushAngleSlider->deactivate();
+		m_pUI->m_StrokeDirectionChoice->deactivate();
 	}
 }
 
 void ImpressionistDoc::setStrokeDirectionType(int type)
 {
-	m_pCurrentBrush = ImpBrush::c_pBrushes[type];
 	if (type == BRUSH_LINES || type == BRUSH_SCATTERED_LINES) {
 		m_pUI->m_BrushThicknessSlider->activate();
 		m_pUI->m_BrushAngleSlider->activate();

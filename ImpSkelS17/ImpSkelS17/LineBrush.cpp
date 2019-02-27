@@ -58,6 +58,7 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	glLineWidth((float)thickness);
 
 	// Stroke Direction Stuff
+	//int direction = dlg->m_StrokeDirectionTypeChoice->value();
 		// 1. Right mouse
 			//don't do anything, use default! 
 		// 2. Mouse Direction
