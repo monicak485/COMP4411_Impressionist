@@ -41,19 +41,31 @@ void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 	}
 
 	int size = pDoc->getSize();
-	int count = 2 + rand() * 3; // randomly choose between 2, 3 or 4 lines
+	
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glBegin(GL_POINTS);
+	
 
-	for (int i = 0; i < count; ++i) {
+	for (int i = 0; i < size; ++i) {
 		int x = rand() % size - size / 2;
 		int y = rand() % size - size / 2;
 
-		Point p1 = Point((source.x + x), (source.y + y));
-		Point p2 = Point((target.x + x), (target.y + y));
+
+		Point p1 = Point((target.x + x), (target.y + y));
+		Point p2 = Point((source.x + x), (source.y + y));
+
 		CircleBrush::BrushMove(p1, p2);
+
+
+		//SetColor(p1);
+		//glVertex2d(p1.x, p1.y);
+
+
+
 	}
+
+	
 }
 
 void ScatteredCircleBrush::BrushEnd(const Point source, const Point target)

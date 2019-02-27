@@ -78,10 +78,14 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	int x2 = target.x + (int)xLine/2;
 	int y2 = target.y + (int)yLine/2;
 	
-	SetColor(source);
+	//SetColor(source);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glBegin(GL_LINES);
-	glVertex2d(x1, y1);
-	glVertex2d(x2, y2);
+		SetColor(source, pDoc->m_pUI->getAlpha());
+		glVertex2d(x1, y1);
+		glVertex2d(x2, y2);
 
 	glEnd();
 }
