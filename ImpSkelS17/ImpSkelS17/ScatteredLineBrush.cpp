@@ -33,7 +33,7 @@ void ScatteredLineBrush::BrushBegin(const Point source, const Point target)
 
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
-
+	Point prevPoint = Point(target);
 
 	BrushMove(source, target);
 }
@@ -50,10 +50,30 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 
 	int size = pDoc->getSize();
 	int angle = pDoc->getAngle();
-	double xLine = (int)size * cos(((double)angle) * 3.16 / 360);
-	double yLine = (int)size * sin(((double)angle) * 3.16 / 360);
+	double xLine, yLine;
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
+
+	// Stroke Direction Stuff
+	int direction = pDoc->getStrokeDirectionType();
+	// GRADIENT
+	if (direction == 1) {
+		printf("Gradient needs to happen here");
+	}
+	// MOUSE DIRECTION
+	else if (direction == 2) {
+		int diffX = target.x - prevPoint.x;
+		int diffY = target.y - prevPoint.y;
+		angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
+		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
+		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
+		prevPoint.x = target.x;
+		prevPoint.y = target.y;
+	}
+	else {
+		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
+		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
+	}
 
 	int x1 = target.x - (int)xLine / 2;
 	int y1 = target.y - (int)yLine / 2;
@@ -64,6 +84,7 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 
 		glBegin(GL_LINES);
 
+		// random offset for scattering
 		int Xoffset = rand() % (2 * size) - size;
 		int Yoffset = rand() % (2 * size) - size;
 		SetColor(Point(source.x + Xoffset, source.y + Yoffset));

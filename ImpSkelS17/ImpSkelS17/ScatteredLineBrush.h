@@ -19,6 +19,7 @@ public:
 	void BrushEnd(const Point source, const Point target);
 	void DrawLine(const Point source, const Point target, const int size, const int angle);
 	char* BrushName(void);
+	Point prevPoint;
 };
 
 #endif

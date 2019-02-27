@@ -93,7 +93,6 @@ void ImpressionistDoc::setBrushType(int type)
 
 void ImpressionistDoc::setStrokeDirectionType(int type)
 {
-	printf("type %d\n", type);
 	m_pUI->setStrokeDirection(type);
 	m_nCurrentDirection = type;
 }
