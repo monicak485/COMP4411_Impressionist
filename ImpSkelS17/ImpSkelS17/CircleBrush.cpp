@@ -40,7 +40,9 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
+	int size = pDoc->getSize();
 	double radius = pDoc->getSize()/2;
+
 	float DEGINRAD = 3.14159 / 180;
 	int num = 360;
 
@@ -57,12 +59,13 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 	//SetColor(source, pDoc->m_pUI->getAlpha());
 
 	glBegin(GL_TRIANGLE_FAN);
-	SetColor(source, pDoc->m_pUI->getAlpha());
+		SetColor(source, pDoc->m_pUI->getAlpha());
+		//glVertex2d(target.x, target.y);
 
-	for (int i = 0; i < num; i++) {
-		float degInRad = i* DEGINRAD;
-		glVertex2d(cos(degInRad)*radius +target.x, sin(degInRad)*radius + target.y);
-	}
+		for (int i = 0; i < num; i++) {
+			float degInRad = i* DEGINRAD;
+			glVertex2d(cos(degInRad)*radius +target.x, sin(degInRad)*radius + target.y);
+		}
 	
 
 	glEnd();

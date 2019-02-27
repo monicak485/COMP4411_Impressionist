@@ -80,7 +80,11 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 	int x2 = target.x + (int)xLine / 2;
 	int y2 = target.y + (int)yLine / 2;
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	for (int i = 0; i < 4; i++) {
+		
 
 		glBegin(GL_LINES);
 
@@ -91,7 +95,7 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 		glVertex2d(x2 + Xoffset, y1 + Yoffset);
 		glVertex2d(x1 + Xoffset, y2 + Yoffset);
 
-		glEnd();
+			glEnd();
 	}
 
 }
