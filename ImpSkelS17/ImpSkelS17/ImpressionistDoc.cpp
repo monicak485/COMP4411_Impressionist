@@ -89,6 +89,22 @@ void ImpressionistDoc::setBrushType(int type)
 	}
 }
 
+void ImpressionistDoc::setStrokeDirectionType(int type)
+{
+	m_pCurrentBrush = ImpBrush::c_pBrushes[type];
+	if (type == BRUSH_LINES || type == BRUSH_SCATTERED_LINES) {
+		m_pUI->m_BrushThicknessSlider->activate();
+		m_pUI->m_BrushAngleSlider->activate();
+	}
+	else {
+		m_pUI->m_BrushThicknessSlider->deactivate();
+		m_pUI->m_BrushAngleSlider->deactivate();
+	}
+}
+
+
+
+
 //---------------------------------------------------------
 // Returns the size of the brush.
 //---------------------------------------------------------

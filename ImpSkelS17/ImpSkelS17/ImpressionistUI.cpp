@@ -229,6 +229,7 @@ void ImpressionistUI::cb_brushes(Fl_Menu_* o, void* v)
 	whoami(o)->m_brushDialog->show();
 }
 
+
 //------------------------------------------------------------
 // Clears the paintview canvas.
 // Called by the UI when the clear canvas menu item is chosen
@@ -289,7 +290,16 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 
 	pDoc->setBrushType(type);
 }
+void ImpressionistUI::cb_strokeDirectionChoice(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* pUI = ((ImpressionistUI *)(o->user_data()));
+	ImpressionistDoc* pDoc = pUI->getDocument();
 
+	//int type = (int)v;
+
+
+	//pDoc->setBrushType(type);
+}
 //------------------------------------------------------------
 // Clears the paintview canvas.
 // Called by the UI when the clear canvas button is pushed
@@ -528,6 +538,14 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE+1] = {
   {0}
 };
 
+// Stroke Direction choice menu definition
+Fl_Menu_Item ImpressionistUI::strokeDirectionTypeMenu[NUM_STROKE_TYPE + 1] = {
+	{ "Slider/Right Mouse",FL_ALT + 's', (Fl_Callback *)ImpressionistUI::cb_strokeDirectionChoice, (void *)STROKE_DIRECTION_SLIDER},
+	{ "Gradient",			FL_ALT + 'g', (Fl_Callback *)ImpressionistUI::cb_strokeDirectionChoice, (void *)STROKE_DIRECTION_GRADIENT},
+	{ "Brush Direction",	FL_ALT + 'b', (Fl_Callback *)ImpressionistUI::cb_strokeDirectionChoice, (void *)STROKE_DIRECTION_BRUSH },
+	{ 0 }
+};
+
 
 
 //----------------------------------------------------
@@ -577,6 +595,12 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushTypeChoice->user_data((void*)(this));	// record self to be used by static callback functions
 		m_BrushTypeChoice->menu(brushTypeMenu);
 		m_BrushTypeChoice->callback(cb_brushChoice);
+
+		m_StrokeDirectionChoice = new Fl_Choice(120, 40, 150, 25, "&Stroke Direction");
+		m_StrokeDirectionChoice->user_data((void*)(this));	// record self to be used by static callback functions
+		m_StrokeDirectionChoice->menu(strokeDirectionTypeMenu);
+		m_StrokeDirectionChoice->callback(cb_strokeDirectionChoice);
+
 
 		m_ClearCanvasButton = new Fl_Button(240,10,150,25,"&Clear Canvas");
 		m_ClearCanvasButton->user_data((void*)(this));
