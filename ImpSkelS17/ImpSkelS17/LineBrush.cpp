@@ -34,7 +34,8 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
 
-
+	Point prevPoint = Point(target);
+	
 	BrushMove(source, target);
 }
 
@@ -47,6 +48,7 @@ void LineBrush::BrushMove(const Point source, const Point target)
 		printf("LineBrush::BrushMove  document is NULL\n");
 		return;
 	}
+	
 
 	int size = pDoc->getSize();
 	int angle = pDoc->getAngle();
@@ -54,6 +56,20 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	double yLine = (int)size * sin(((double)angle) * 3.16 / 360);
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
+
+	// Stroke Direction Stuff
+		// 1. Right mouse
+			//don't do anything, use default! 
+		// 2. Mouse Direction
+	int diffX = target.x - prevPoint.x;
+	int diffY = target.y - prevPoint.y;
+	printf("diff %d\n %d\n", diffX, diffY);
+	angle = (int)(atan2(diffY, diffX));
+	xLine = (int)size * cos(((double)angle) * 3.16 / 360);
+	yLine = (int)size * sin(((double)angle) * 3.16 / 360);
+	prevPoint.x = target.x;
+	prevPoint.y = target.y;
+		// 3. Gradient
 	
 
 	int x1 = target.x - (int)xLine/2;
