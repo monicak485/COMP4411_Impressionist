@@ -54,9 +54,10 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		SetColor(source, pDoc->m_pUI->getAlpha());
+	//SetColor(source, pDoc->m_pUI->getAlpha());
 
 	glBegin(GL_TRIANGLE_FAN);
+	SetColor(source, pDoc->m_pUI->getAlpha());
 
 	for (int i = 0; i < num; i++) {
 		float degInRad = i* DEGINRAD;
