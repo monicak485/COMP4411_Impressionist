@@ -130,10 +130,10 @@ void PaintView::draw()
 			case RIGHT_MOUSE_DRAG:
 				RestoreContent();
 
-				rightMouseStroke->BrushBegin(source, target);
+				rightMouseStroke->BrushMove(source, target);
 				break;
 			case RIGHT_MOUSE_UP:
-				rightMouseStroke->BrushBegin(source, target);
+				rightMouseStroke->BrushEnd(source, target);
 			
 				delete rightMouseStroke;
 				rightMouseStroke = NULL;
