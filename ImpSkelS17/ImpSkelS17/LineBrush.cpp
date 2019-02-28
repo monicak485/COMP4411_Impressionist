@@ -11,6 +11,9 @@
 
 #include "LineBrush.h"
 
+#include "RightMouseStroke.h"
+
+
 #include <iostream>
 
 using namespace std;
@@ -21,8 +24,8 @@ LineBrush::LineBrush(ImpressionistDoc* pDoc, char* name) :
 	ImpBrush(pDoc, name)
 {
 	//test
-	mouseStart = NULL;
-	mouseEnd = NULL;
+	//mouseStart = NULL;
+	//mouseEnd = NULL;
 }
 
 void LineBrush::BrushBegin(const Point source, const Point target)
@@ -39,7 +42,7 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 
 	Point prevPoint = Point(target);
 	//test
-	mouseStart = new Point(target.x, target.y);
+	//mouseStart = new Point(target.x, target.y);
 
 	BrushMove(source, target);
 }
@@ -86,7 +89,22 @@ void LineBrush::BrushMove(const Point source, const Point target)
 		prevPoint.x = target.x;
 		prevPoint.y = target.y;
 	}
+	//RIGHT MOUSE
 	else {
+		int diffX, diffY;
+		Point mouseStart = pDoc->getMouseStart();
+		Point mouseEnd = pDoc->getMouseEnd();
+		if (mouseStart.x != 0) {
+			Point endMouse = mouseEnd;
+			Point startMouse = mouseStart;
+			diffX = endMouse.x - startMouse.x;
+			diffY = endMouse.y - startMouse.y;
+		}
+		else {
+			diffX = target.x - source.x;
+			diffY = target.y - source.y;
+		}
+		angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
 		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
 		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
 	}

@@ -15,7 +15,8 @@ extern float frand();
 RightMouseStroke::RightMouseStroke(ImpressionistDoc* pDoc, char* name) :
 	ImpBrush(pDoc, name)
 {
-	mouseStart =NULL;
+	mouseStart = NULL;
+	mouseEnd = NULL;
 }
 
 void RightMouseStroke::BrushBegin(const Point source, const Point target)
@@ -25,10 +26,10 @@ void RightMouseStroke::BrushBegin(const Point source, const Point target)
 
 	int size = pDoc->getSize();
 
-	mouseStart = new Point(target.x, target.y);
-
+	mouseStart = new Point(source.x, source.y);
+	pDoc->setMouseStart(*mouseStart);
 	glPointSize((float)size);
-	glColor3f(1.0, 0.0, 0.0);
+	glColor3f(1.0, 1.0, 1.0);
 	BrushMove(source, target);
 }
 
@@ -50,7 +51,8 @@ void RightMouseStroke::BrushMove(const Point source, const Point target)
 	//printf("alpha %d\n", pDoc->m_pUI->getAlpha());
 	glVertex2d(mouseStart->x, mouseStart->y);
 	glVertex2d(target.x, target.y);
-
+	mouseEnd = new Point(target.x, target.y);
+	pDoc->setMouseEnd(*mouseEnd);
 	glEnd();
 }
 
@@ -60,4 +62,5 @@ void RightMouseStroke::BrushEnd(const Point source, const Point target)
 	delete mouseStart;
 	mouseStart = NULL;
 }
+
 

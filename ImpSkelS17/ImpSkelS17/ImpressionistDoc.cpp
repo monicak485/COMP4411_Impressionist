@@ -287,3 +287,20 @@ double ImpressionistDoc::getGradientY(const Point source)
 		magY -= SobelY[3][3] * (int)GetOriginalPixel(source.x + 3 - 1, source.y + 3 - 1);
 	return magY;
 }
+
+void ImpressionistDoc::setMouseStart(const Point start) {
+	mouseStart = start; 
+}
+
+void ImpressionistDoc::setMouseEnd(const Point end) {
+	mouseEnd = end; 
+}
+
+Point ImpressionistDoc::getMouseStart() {
+	return mouseStart; 
+}
+
+Point ImpressionistDoc::getMouseEnd() {
+	return mouseEnd; 
+}
+

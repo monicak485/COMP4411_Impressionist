@@ -32,11 +32,15 @@ public:
 	int		getAngle();						// get the UI size
 	double  getAlpha();
 	int		getStrokeDirectionType();
+	Point	getMouseStart();
+	Point	getMouseEnd();
 
 	void	setSize(int size);				// set the UI size
 	void	setThickness(int size);				// set the UI size
 	void	setAngle(int size);				// set the UI size
 	void    setAlpha(double alpha);
+	void	setMouseStart(Point start);
+	void	setMouseEnd(Point end);
 
 	char*	getImageName();					// get the current image name
 	
@@ -61,6 +65,8 @@ public:
 	int m_nThickness;
 	int m_nAngle;
 	double m_nAlpha;
+	Point mouseStart;
+	Point mouseEnd; 
 
 	int m_nCurrentDirection;
 

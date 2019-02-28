@@ -21,11 +21,6 @@ public:
 	void BrushBegin(const Point source, const Point target);
 	void BrushMove(const Point source, const Point target);
 	void BrushEnd(const Point source, const Point target);
-	int getGradient(const Point source, const Point target);
-	char* BrushName(void);
-
-	//test
-	
 
 	Point prevPoint;
 };

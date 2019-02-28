@@ -4,8 +4,8 @@
 // The header file for Right Mouse Stroke. 
 //
 
-#ifndef POINTBRUSH_H
-#define POINTBRUSH_H
+#ifndef RIGHTMOUSESTROKE_H
+#define RIGHTMOUSESTROKE_H
 
 #include "ImpBrush.h"
 
@@ -15,11 +15,11 @@ public:
 	RightMouseStroke(ImpressionistDoc* pDoc = NULL, char* name = NULL);
 
 	Point* mouseStart;
+	Point* mouseEnd;
 
 	void BrushBegin(const Point source, const Point target);
 	void BrushMove(const Point source, const Point target);
 	void BrushEnd(const Point source, const Point target);
-	char* BrushName(void);
 };
 
 #endif

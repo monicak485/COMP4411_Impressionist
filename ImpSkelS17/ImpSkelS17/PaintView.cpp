@@ -134,7 +134,6 @@ void PaintView::draw()
 				break;
 			case RIGHT_MOUSE_UP:
 				rightMouseStroke->BrushEnd(source, target);
-			
 				delete rightMouseStroke;
 				rightMouseStroke = NULL;
 				RestoreContent();
