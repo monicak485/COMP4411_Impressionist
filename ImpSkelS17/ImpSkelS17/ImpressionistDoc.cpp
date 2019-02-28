@@ -19,6 +19,7 @@
 #include "ScatteredLineBrush.h"
 #include "ScatteredPointBrush.h"
 #include "ScatteredCircleBrush.h"
+#include <iostream>
 
 
 #define DESTROY(p)	{  if ((p)!=NULL) {delete [] p; p=NULL; } }
@@ -244,3 +245,45 @@ GLubyte* ImpressionistDoc::GetOriginalPixel( const Point p )
 	return GetOriginalPixel( p.x, p.y );
 }
 
+
+double ImpressionistDoc::getGradientX(const Point source)
+{
+	//Function to calculate gradient
+
+	int SobelX[3][3] ={{ -1, 0, 1 },{ -2, 0, 2 },{ -1, 0, 1 }};
+
+	double magX = 0.0; 
+
+	for (int a = 0; a < 3; a++)
+	{
+		for (int b = 0; b < 3; b++)
+		{
+			magX += SobelX[a][b] * (int)GetOriginalPixel(source.x + b - 1, source.y + a - 1);
+			if (magX != 0)
+				break;
+		}
+	}
+	if (magX != 0)
+		magX -= SobelX[3][3] * (int)GetOriginalPixel(source.x + 3 - 1, source.y + 3 - 1);
+	return magX;
+}
+
+double ImpressionistDoc::getGradientY(const Point source)
+{
+	int SobelY[3][3] ={{ 1, 2, 1 },{ 0, 0, 0 },{ -1, -2, -1 }};
+
+	double magY = 0.0; 
+
+	for (int a = 0; a < 3; a++)
+	{
+		for (int b = 0; b < 3; b++)
+		{
+			magY += SobelY[a][b] * (int)GetOriginalPixel(source.x + b - 1, source.y + a - 1);
+			if (magY != 0)
+				break;
+		}
+	}
+	if (magY != 0) 
+		magY -= SobelY[3][3] * (int)GetOriginalPixel(source.x + 3 - 1, source.y + 3 - 1);
+	return magY;
+}

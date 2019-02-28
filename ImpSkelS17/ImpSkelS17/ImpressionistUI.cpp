@@ -591,7 +591,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_nSize = 10;
 	m_nThickness = 0;
 	m_nAngle = 0;
-	m_nAlpha = 0.00;
+	m_nAlpha = 1.00;
 	m_nR = 1.0;
 	m_nG = 1.0;
 	m_nB = 1.0;

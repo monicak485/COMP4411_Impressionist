@@ -53,6 +53,7 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	int size = pDoc->getSize();
 	int angle = pDoc->getAngle();
 	double xLine, yLine; 
+	Point startGradient, endGradient;
 
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
@@ -61,7 +62,14 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	int direction = pDoc->getStrokeDirectionType();
 	// GRADIENT
 	if (direction == 1) {
-		printf("Gradient needs to happen here");
+		startGradient = Point(0, 0);
+		endGradient = Point(pDoc->getGradientX(source), pDoc->getGradientY(source));
+		int diffX = endGradient.x - startGradient.x;
+		int diffY = endGradient.y - startGradient.y;
+		//intf("endGradient.x %d Y %d\n", endGradient.x, endGradient.y);
+		angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
+		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
+		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
 	}
 	// MOUSE DIRECTION
 	else if (direction == 2) {
@@ -83,7 +91,6 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	int x2 = target.x + (int)xLine/2;
 	int y2 = target.y + (int)yLine/2;
 	
-	//SetColor(source);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -99,4 +106,6 @@ void LineBrush::BrushEnd(const Point source, const Point target)
 {
 	// do nothing so far
 }
+
+
 

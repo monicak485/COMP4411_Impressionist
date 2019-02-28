@@ -72,6 +72,9 @@ public:
 	GLubyte* GetOriginalPixel( int x, int y );   
 	// Get the color of the original picture at the specified point	
 	GLubyte* GetOriginalPixel( const Point p );  
+	int GetPixelIntensity(int x, int y);
+	double getGradientX(const Point source);
+	double getGradientY(const Point source);
 
 
 private:

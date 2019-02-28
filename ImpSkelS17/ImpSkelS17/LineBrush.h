@@ -17,7 +17,7 @@ public:
 	void BrushBegin(const Point source, const Point target);
 	void BrushMove(const Point source, const Point target);
 	void BrushEnd(const Point source, const Point target);
-	void DrawLine(const Point source, const Point target, const int size, const int angle);
+	int getGradient(const Point source, const Point target);
 	char* BrushName(void);
 	Point prevPoint;
 };
