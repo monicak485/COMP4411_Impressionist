@@ -94,17 +94,15 @@ void LineBrush::BrushMove(const Point source, const Point target)
 		int diffX, diffY;
 		Point mouseStart = pDoc->getMouseStart();
 		Point mouseEnd = pDoc->getMouseEnd();
-		if (mouseStart.x != 0) {
+		int clicked = pDoc->getClicked();
+		
+		if (clicked != 0) {
 			Point endMouse = mouseEnd;
 			Point startMouse = mouseStart;
 			diffX = endMouse.x - startMouse.x;
 			diffY = endMouse.y - startMouse.y;
+			angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
 		}
-		else {
-			diffX = target.x - source.x;
-			diffY = target.y - source.y;
-		}
-		angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
 		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
 		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
 	}
@@ -121,13 +119,15 @@ void LineBrush::BrushMove(const Point source, const Point target)
 		SetColor(source, pDoc->m_pUI->getAlpha());
 		glVertex2d(x1, y1);
 		glVertex2d(x2, y2);
-
+	
 	glEnd();
 }
 
 void LineBrush::BrushEnd(const Point source, const Point target)
 {
 	// do nothing so far
+	ImpressionistDoc* pDoc = GetDocument();
+	pDoc->setClicked();
 }
 
 

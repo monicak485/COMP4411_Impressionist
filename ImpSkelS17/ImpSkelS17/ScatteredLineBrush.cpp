@@ -88,7 +88,8 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 		int Yoffset1 = rand() % (2 * size) - size;
 		Point mouseStart = pDoc->getMouseStart();
 		Point mouseEnd = pDoc->getMouseEnd();
-		if (mouseStart.x != 0) {
+		int clicked = pDoc->getClicked();
+		if (clicked != 0) {
 			Point endMouse = mouseEnd;
 			Point startMouse = mouseStart;
 			diffX = endMouse.x - startMouse.x;
@@ -145,5 +146,7 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 void ScatteredLineBrush::BrushEnd(const Point source, const Point target)
 {
 	// do nothing so far
+	ImpressionistDoc* pDoc = GetDocument();
+	pDoc->setClicked();
 }
 

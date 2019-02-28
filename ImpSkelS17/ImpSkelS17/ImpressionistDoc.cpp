@@ -290,6 +290,7 @@ double ImpressionistDoc::getGradientY(const Point source)
 
 void ImpressionistDoc::setMouseStart(const Point start) {
 	mouseStart = start; 
+	clicked = 1; 
 }
 
 void ImpressionistDoc::setMouseEnd(const Point end) {
@@ -302,5 +303,13 @@ Point ImpressionistDoc::getMouseStart() {
 
 Point ImpressionistDoc::getMouseEnd() {
 	return mouseEnd; 
+}
+
+int ImpressionistDoc::getClicked() {
+	return clicked; 
+}
+
+void ImpressionistDoc::setClicked() {
+	clicked = 0;
 }
 
