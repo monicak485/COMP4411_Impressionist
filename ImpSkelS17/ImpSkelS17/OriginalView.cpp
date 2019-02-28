@@ -77,6 +77,16 @@ void OriginalView::draw()
 
 	}
 			
+	//test
+	/*
+	if (isMoving) {
+		glPointSize(5);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glBegin(GL_POINTS);
+		glVertex2f(cursor.x, cursor.y);
+		glEnd();
+	}*/
+
 	glFlush();
 }
 

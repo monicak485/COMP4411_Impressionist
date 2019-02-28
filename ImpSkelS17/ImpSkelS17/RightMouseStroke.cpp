@@ -8,6 +8,7 @@
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "RightMouseStroke.h"
+#include "PaintView.h"
 
 extern float frand();
 
@@ -56,5 +57,7 @@ void RightMouseStroke::BrushMove(const Point source, const Point target)
 void RightMouseStroke::BrushEnd(const Point source, const Point target)
 {
 	// do nothing so far
+	delete mouseStart;
+	mouseStart = NULL;
 }
 
