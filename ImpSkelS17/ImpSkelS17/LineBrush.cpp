@@ -20,6 +20,9 @@ extern float frand();
 LineBrush::LineBrush(ImpressionistDoc* pDoc, char* name) :
 	ImpBrush(pDoc, name)
 {
+	//test
+	mouseStart = NULL;
+	mouseEnd = NULL;
 }
 
 void LineBrush::BrushBegin(const Point source, const Point target)
@@ -35,7 +38,9 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 	glLineWidth((float)thickness);
 
 	Point prevPoint = Point(target);
-	
+	//test
+	mouseStart = new Point(target.x, target.y);
+
 	BrushMove(source, target);
 }
 

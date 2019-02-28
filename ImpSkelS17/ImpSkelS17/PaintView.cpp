@@ -9,7 +9,8 @@
 #include "impressionistUI.h"
 #include "paintview.h"
 #include "ImpBrush.h"
-
+#include "LineBrush.h"
+#include "RightMouseStroke.h"
 
 #define LEFT_MOUSE_DOWN		1
 #define LEFT_MOUSE_DRAG		2
@@ -18,6 +19,8 @@
 #define RIGHT_MOUSE_DRAG	5
 #define RIGHT_MOUSE_UP		6
 
+#include <math.h>
+#include <algorithm>  
 
 #ifndef WIN32
 #define min(a, b)	( ( (a)<(b) ) ? (a) : (b) )
@@ -27,6 +30,8 @@
 static int		eventToDo;
 static int		isAnEvent=0;
 static Point	coord;
+
+int angle;
 
 PaintView::PaintView(int			x, 
 					 int			y, 
@@ -94,43 +99,55 @@ void PaintView::draw()
 
 	if ( m_pDoc->m_ucPainting && isAnEvent) 
 	{
+		int size = m_pDoc->getSize();
+		if (coord.x <= m_nDrawWidth && coord.y <= m_nDrawHeight) {
+			// Clear it after processing.
+			isAnEvent	= 0;	
 
-		// Clear it after processing.
-		isAnEvent	= 0;	
-
-		Point source( coord.x + m_nStartCol, m_nEndRow - coord.y );
-		Point target( coord.x, m_nWindowHeight - coord.y );
+			Point source( coord.x + m_nStartCol, m_nEndRow - coord.y );
+			Point target( coord.x, m_nWindowHeight - coord.y );
 		
-		// This is the event handler
-		switch (eventToDo) 
-		{
-		case LEFT_MOUSE_DOWN:
-			m_pDoc->m_pCurrentBrush->BrushBegin( source, target );
-			break;
-		case LEFT_MOUSE_DRAG:
-			m_pDoc->m_pCurrentBrush->BrushMove( source, target );
-			break;
-		case LEFT_MOUSE_UP:
-			m_pDoc->m_pCurrentBrush->BrushEnd( source, target );
+			// This is the event handler
+			switch (eventToDo) 
+			{
+			case LEFT_MOUSE_DOWN:
+				m_pDoc->m_pCurrentBrush->BrushBegin( source, target );
+				break;
+			case LEFT_MOUSE_DRAG:
+				m_pDoc->m_pCurrentBrush->BrushMove( source, target );
+				break;
+			case LEFT_MOUSE_UP:
+				m_pDoc->m_pCurrentBrush->BrushEnd( source, target );
 
-			SaveCurrentContent();
-			RestoreContent();
-			break;
-		case RIGHT_MOUSE_DOWN:
+				SaveCurrentContent();
+				RestoreContent();
+				break;
+			case RIGHT_MOUSE_DOWN:
+				SaveCurrentContent();
+				rightMouseStroke = new RightMouseStroke(m_pDoc, "Right Mouse Stroke");
+				rightMouseStroke->BrushBegin(source, target);
+				break;
+			case RIGHT_MOUSE_DRAG:
+				RestoreContent();
 
-			break;
-		case RIGHT_MOUSE_DRAG:
+				rightMouseStroke->BrushBegin(source, target);
+				break;
+			case RIGHT_MOUSE_UP:
+				rightMouseStroke->BrushBegin(source, target);
+			
+				delete rightMouseStroke;
+				rightMouseStroke = NULL;
+				RestoreContent();
+				break;
 
-			break;
-		case RIGHT_MOUSE_UP:
-
-			break;
-
-		default:
-			printf("Unknown event!!\n");		
-			break;
+			default:
+				printf("Unknown event!!\n");		
+				break;
+			}
 		}
 	}
+
+		
 
 	glFlush();
 
@@ -144,6 +161,8 @@ void PaintView::draw()
 
 int PaintView::handle(int event)
 {
+	ImpressionistUI* ui = m_pDoc->m_pUI;
+
 	switch(event)
 	{
 	case FL_ENTER:
@@ -166,6 +185,12 @@ int PaintView::handle(int event)
 			eventToDo=RIGHT_MOUSE_DRAG;
 		else
 			eventToDo=LEFT_MOUSE_DRAG;
+		//test
+		/*ui->m_origView->isMoving = true;
+		ui->m_origView->cursor.x = coord.x;
+		ui->m_origView->cursor.y = m_pDoc->m_nPaintHeight - coord.y;
+		ui->m_origView->redraw();
+		*/
 		isAnEvent=1;
 		redraw();
 		break;
@@ -182,6 +207,11 @@ int PaintView::handle(int event)
 	case FL_MOVE:
 		coord.x = Fl::event_x();
 		coord.y = Fl::event_y();
+		//test
+		/*ui->m_origView->isMoving = true;
+		ui->m_origView->cursor.x = coord.x;
+		ui->m_origView->cursor.y = m_pDoc->m_nPaintHeight - coord.y;
+		ui->m_origView->redraw();*/
 		break;
 	default:
 		return 0;
