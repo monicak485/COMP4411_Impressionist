@@ -53,12 +53,20 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 	double xLine, yLine;
 	int thickness = pDoc->getThickness();
 	glLineWidth((float)thickness);
+	Point startGradient, endGradient;
 
 	// Stroke Direction Stuff
 	int direction = pDoc->getStrokeDirectionType();
 	// GRADIENT
 	if (direction == 1) {
-		printf("Gradient needs to happen here");
+		startGradient = Point(0, 0);
+		endGradient = Point(pDoc->getGradientX(source), pDoc->getGradientY(source));
+		int diffX = endGradient.x - startGradient.x;
+		int diffY = endGradient.y - startGradient.y;
+		//intf("endGradient.x %d Y %d\n", endGradient.x, endGradient.y);
+		angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
+		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
+		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
 	}
 	// MOUSE DIRECTION
 	else if (direction == 2) {
