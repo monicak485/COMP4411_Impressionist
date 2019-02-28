@@ -7,9 +7,9 @@
 #ifndef SCATTEREDLINEBRUSH_H
 #define SCATTEREDLINEBRUSH_H
 
-#include "ImpBrush.h"
+#include "LineBrush.h"
 
-class ScatteredLineBrush : public ImpBrush
+class ScatteredLineBrush : public LineBrush
 {
 public:
 	ScatteredLineBrush(ImpressionistDoc* pDoc = NULL, char* name = NULL);

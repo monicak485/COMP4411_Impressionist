@@ -11,6 +11,10 @@
 
 #include "ScatteredLineBrush.h"
 
+#include "RightMouseStroke.h"
+
+#include "LineBrush.h"
+
 #include <iostream>
 
 using namespace std;
@@ -18,7 +22,7 @@ using namespace std;
 extern float frand();
 
 ScatteredLineBrush::ScatteredLineBrush(ImpressionistDoc* pDoc, char* name) :
-	ImpBrush(pDoc, name)
+	LineBrush(pDoc, name)
 {
 }
 
@@ -80,6 +84,8 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 	}
 	else {
 		int diffX, diffY;
+		int Xoffset1 = rand() % (2 * size) - size;
+		int Yoffset1 = rand() % (2 * size) - size;
 		Point mouseStart = pDoc->getMouseStart();
 		Point mouseEnd = pDoc->getMouseEnd();
 		if (mouseStart.x != 0) {
@@ -93,9 +99,25 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 			diffY = target.y - source.y;
 		}
 		angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
-		printf("angle: %d\n", angle);
-		xLine = (int)size * cos(((double)angle) * 3.16 / 180);
-		yLine = (int)size * sin(((double)angle) * 3.16 / 180);
+		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
+		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
+		int x1 = target.x - (int)xLine / 2;
+		int y1 = target.y - (int)yLine / 2;
+		int x2 = target.x + (int)xLine / 2;
+		int y2 = target.y + (int)yLine / 2;
+
+		for (int i = 0; i < 4; i++) {
+
+			glBegin(GL_LINES);
+			// random offset for scattering
+			int Xoffset = rand() % (2 * size) - size;
+			int Yoffset = rand() % (2 * size) - size;
+
+			Point newSource(source.x + Xoffset, source.y + Yoffset);
+			Point newTarget(target.x + Xoffset, target.y + Yoffset);
+			LineBrush::BrushMove(newSource, newTarget);
+
+		}
 	}
 
 	int x1 = target.x - (int)xLine / 2;
@@ -105,19 +127,19 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	if (direction == 1 || direction == 2) {
+		for (int i = 0; i < 4; i++) {
+			glBegin(GL_LINES);
+			// random offset for scattering
+			int Xoffset = rand() % (2 * size) - size;
+			int Yoffset = rand() % (2 * size) - size;
+			SetColor(Point(source.x + Xoffset, source.y + Yoffset));
+			glVertex2d(x2 + Xoffset, y1 + Yoffset);
+			glVertex2d(x1 + Xoffset, y2 + Yoffset);
 
-	for (int i = 0; i < 4; i++) {
-		glBegin(GL_LINES);
-		// random offset for scattering
-		int Xoffset = rand() % (2 * size) - size;
-		int Yoffset = rand() % (2 * size) - size;
-		SetColor(Point(source.x + Xoffset, source.y + Yoffset));
-		glVertex2d(x2 + Xoffset, y1 + Yoffset);
-		glVertex2d(x1 + Xoffset, y2 + Yoffset);
-
-		glEnd();
+			glEnd();
+		}
 	}
-
 }
 
 void ScatteredLineBrush::BrushEnd(const Point source, const Point target)
