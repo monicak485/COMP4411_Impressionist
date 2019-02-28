@@ -79,8 +79,23 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 		prevPoint.y = target.y;
 	}
 	else {
-		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
-		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
+		int diffX, diffY;
+		Point mouseStart = pDoc->getMouseStart();
+		Point mouseEnd = pDoc->getMouseEnd();
+		if (mouseStart.x != 0) {
+			Point endMouse = mouseEnd;
+			Point startMouse = mouseStart;
+			diffX = endMouse.x - startMouse.x;
+			diffY = endMouse.y - startMouse.y;
+		}
+		else {
+			diffX = target.x - source.x;
+			diffY = target.y - source.y;
+		}
+		angle = (int)(atan2(diffY, diffX) / 3.16 * 360);
+		printf("angle: %d\n", angle);
+		xLine = (int)size * cos(((double)angle) * 3.16 / 180);
+		yLine = (int)size * sin(((double)angle) * 3.16 / 180);
 	}
 
 	int x1 = target.x - (int)xLine / 2;
@@ -92,10 +107,7 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	for (int i = 0; i < 4; i++) {
-		
-
 		glBegin(GL_LINES);
-
 		// random offset for scattering
 		int Xoffset = rand() % (2 * size) - size;
 		int Yoffset = rand() % (2 * size) - size;
@@ -103,7 +115,7 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 		glVertex2d(x2 + Xoffset, y1 + Yoffset);
 		glVertex2d(x1 + Xoffset, y2 + Yoffset);
 
-			glEnd();
+		glEnd();
 	}
 
 }
