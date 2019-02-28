@@ -473,3 +473,5 @@ _Pvt_Extensions
 *.out
 
 *.app
+
+*.VC.VC.opendb
