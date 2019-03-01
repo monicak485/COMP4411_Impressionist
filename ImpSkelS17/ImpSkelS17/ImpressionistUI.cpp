@@ -431,15 +431,20 @@ void ImpressionistUI::setThickness(int thickness )
 //------------------------------------------------
 int ImpressionistUI::getAngle()
 {
+	//printf("clicked %d\n", m_pDoc->getClicked());
+	//if (m_pDoc->getClicked() == 1)
+		//m_pDoc->setClicked();
 	return m_nAngle;
 }
 
 void ImpressionistUI::setAngle(int angle)
 {
 	m_nAngle = angle;
-
-	if (angle <= 180)
+	//m_pDoc->setClicked();
+	
+	if (angle <= 180) {
 		m_BrushAngleSlider->value(m_nAngle);
+	}
 }
 
 int ImpressionistUI::getStrokeDirection() {

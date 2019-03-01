@@ -95,7 +95,6 @@ void LineBrush::BrushMove(const Point source, const Point target)
 		Point mouseStart = pDoc->getMouseStart();
 		Point mouseEnd = pDoc->getMouseEnd();
 		int clicked = pDoc->getClicked();
-		
 		if (clicked != 0) {
 			Point endMouse = mouseEnd;
 			Point startMouse = mouseStart;
@@ -106,7 +105,6 @@ void LineBrush::BrushMove(const Point source, const Point target)
 		xLine = (int)size * cos(((double)angle) * 3.16 / 360);
 		yLine = (int)size * sin(((double)angle) * 3.16 / 360);
 	}
-
 	int x1 = target.x - (int)xLine/2;
 	int y1 = target.y - (int)yLine/2;
 	int x2 = target.x + (int)xLine/2;
